@@ -14,7 +14,9 @@ class PriceScreen extends StatefulWidget {
 class _PriceScreenState extends State<PriceScreen> {
 
   String selectedCurrency = 'USD' ;
-  String rate ='';
+  String BTCrate ='';
+  String ETHrate ='';
+  String LTCrate ='';
 
   DropdownButton<String> androidDropdown() {
     List<DropdownMenuItem<String>> dropdownItems = [];
@@ -58,9 +60,11 @@ class _PriceScreenState extends State<PriceScreen> {
 
   void getRate(String SelectedCurrency) async{
     CoinData coindata =CoinData();
-    double rated = await coindata.getCoinData(SelectedCurrency);
+    var cryptoPrices = await coindata.getCoinData(SelectedCurrency);
     setState(() {
-      rate = rated.toStringAsFixed(0);
+      BTCrate = cryptoPrices['BTC'];
+      ETHrate = cryptoPrices['ETH'];
+      LTCrate = cryptoPrices['LTC'];
     });
   }
 
@@ -95,7 +99,7 @@ class _PriceScreenState extends State<PriceScreen> {
                   child: Padding(
                     padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 28.0),
                     child: Text(
-                      '1 BTC = $rate $selectedCurrency',
+                      '1 BTC = $BTCrate $selectedCurrency',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 20.0,
@@ -116,7 +120,7 @@ class _PriceScreenState extends State<PriceScreen> {
                   child: Padding(
                     padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 28.0),
                     child: Text(
-                      '1 ETH = $rate $selectedCurrency',
+                      '1 ETH = $ETHrate $selectedCurrency',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 20.0,
@@ -137,7 +141,7 @@ class _PriceScreenState extends State<PriceScreen> {
                   child: Padding(
                     padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 28.0),
                     child: Text(
-                      '1 LTC = $rate $selectedCurrency',
+                      '1 LTC = $LTCrate $selectedCurrency',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 20.0,
